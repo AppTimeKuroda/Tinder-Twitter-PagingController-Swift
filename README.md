@@ -9,9 +9,9 @@ A navigation bar system allowing to do a Tinder like or Twitter like. SLPagingVi
 
 ## Requirements
 
-* iOS 7.0+
+* iOS 8.0+
 * ARC
-* Swift 1.2
+* Swift 3
 
 ## Installation
 
@@ -22,7 +22,7 @@ A navigation bar system allowing to do a Tinder like or Twitter like. SLPagingVi
 Add the following line to your Podfile:
 
 ```ruby
-pod 'SLPagingViewSwift'
+pod 'SLPagingViewSwift', :git => 'https://github.com/davidseek/SLPagingViewSwift-Swift-3.git'
 ```
 
 And run
@@ -43,15 +43,15 @@ Easy to implement:
 
 	// Make views for the navigation bar
     var img1 = UIImage(named: "gear")
-	img1 = img1?.imageWithRenderingMode(.AlwaysTemplate)
-	var img2 = UIImage(named: "profile")
-	img2 = img2?.imageWithRenderingMode(.AlwaysTemplate)
-	var img3 = UIImage(named: "chat")
-	img3 = img3?.imageWithRenderingMode(.AlwaysTemplate)
+    img1 = img1?.withRenderingMode(.alwaysTemplate)
+    var img2 = UIImage(named: "profile")
+    img2 = img2?.withRenderingMode(.alwaysTemplate)
+    var img3 = UIImage(named: "chat")
+    img3 = img3?.withRenderingMode(.alwaysTemplate) 
 
-    var items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
-	var controllers = [ctr1, ctr2, ctr3]
-	controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
+    let items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
+    let controllers = [ctr1, ctr2, ctr3]
+    controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
 
 ````
 
@@ -60,23 +60,25 @@ Then you can make your own behaviors:
 ```swift
 
 	// Tinder Like
-    controller?.pagingViewMoving = ({ subviews in
-		for v in subviews {
-			var lbl = v as UIImageView
+    controller.pagingViewMoving = ({ subviews in
+        if let imageViews = subviews as? [UIImageView] {
+            for imgView in imageViews {
             var c = gray
+            let originX = Double(imgView.frame.origin.x)
 
-			if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
-				c = self.gradient(Double(lbl.frame.origin.x), topX: Double(46), bottomX: Double(144), initC: orange, goal: gray)
-			}
-			else if (lbl.frame.origin.x > 145 && lbl.frame.origin.x < 245) {
-				c = self.gradient(Double(lbl.frame.origin.x), topX: Double(146), bottomX: Double(244), initC: gray, goal: orange)
-			}
-			else if(lbl.frame.origin.x == 145){
-				c = orange
-			}
-			lbl.tintColor = c
-		}
-	})
+            if (originX > 45 && originX < 145) {
+                c = self.gradient(originX, topX: 46, bottomX: 144, initC: orange, goal: gray)
+            }
+            else if (originX > 145 && originX < 245) {
+                c = self.gradient(originX, topX: 146, bottomX: 244, initC: gray, goal: orange)
+            }
+            else if(originX == 145){
+                c = orange
+            }
+            imgView.tintColor = c
+            }
+        }
+    })
 
 ````
 
@@ -87,26 +89,27 @@ Twitter like behaviors
 ```swift
 
 	// Twitter Like
-	controller?.pagingViewMovingRedefine = ({ scrollView, subviews in
-		var i = 0
-		var xOffset = scrollView.contentOffset.x
-		for v in subviews {
-			var lbl = v as UILabel
-			var alpha = CGFloat(0)
+    controller.pagingViewMovingRedefine = ({ scrollView, subviews in
+        var i = 0
+        let xOffset = scrollView.contentOffset.x
+        if let lbls = subviews as? [UILabel] {
+            for lbl in lbls {
+            var alpha : CGFloat = 0
 
-			if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
-				alpha = 1.0 - (xOffset - (CGFloat(i)*320.0)) / 320.0
-			}
-			else if (lbl.frame.origin.x > 145 && lbl.frame.origin.x < 245) {
-				alpha = (xOffset - (CGFloat(i)*320.0)) / 320.0 + 1.0
-			}
-			else if(lbl.frame.origin.x == 145){
-				alpha = 1.0
-			}
-			lbl.alpha = CGFloat(alpha)
-			i++
-		}
-	})
+            if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
+                alpha = 1.0 - (xOffset - (CGFloat(i)*320.0)) / 320.0
+            }
+            else if (lbl.frame.origin.x > 145 && lbl.frame.origin.x < 245) {
+                alpha = (xOffset - (CGFloat(i)*320.0)) / 320.0 + 1.0
+            }
+            else if(lbl.frame.origin.x == 145){
+                alpha = 1.0
+            }
+            lbl.alpha = alpha
+            i += 1
+            }
+        }
+    })
 ````
 
 ##API
@@ -138,14 +141,14 @@ By using one of these values:
 
 ```swift
 
-	enum SLNavigationSideItemsStyle: Int {
-    	case SLNavigationSideItemsStyleOnBounds = 40
-	    case SLNavigationSideItemsStyleClose = 30
-    	case SLNavigationSideItemsStyleNormal = 20
-	    case SLNavigationSideItemsStyleFar = 10
-    	case SLNavigationSideItemsStyleDefault = 0
-	    case SLNavigationSideItemsStyleCloseToEachOne = -40
-	}
+    public enum SLNavigationSideItemsStyle: Int {
+        case slNavigationSideItemsStyleOnBounds = 40
+        case slNavigationSideItemsStyleClose = 30
+        case slNavigationSideItemsStyleNormal = 20
+        case slNavigationSideItemsStyleFar = 10
+        case slNavigationSideItemsStyleDefault = 0
+        case slNavigationSideItemsStyleCloseToEachOne = -40
+    }
 ````
 
 
