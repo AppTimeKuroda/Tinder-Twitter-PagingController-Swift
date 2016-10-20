@@ -21,7 +21,7 @@ public typealias SLPagingViewMoving = ((_ subviews: [UIView])-> ())
 public typealias SLPagingViewMovingRedefine = ((_ scrollView: UIScrollView, _ subviews: NSArray)-> ())
 public typealias SLPagingViewDidChanged = ((_ currentPage: Int)-> ())
 
-open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
+open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate { 
     
     // MARK: - Public properties
     var views = [Int : UIView]()
