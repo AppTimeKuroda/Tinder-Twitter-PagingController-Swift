@@ -22,7 +22,7 @@ A navigation bar system allowing to do a Tinder like or Twitter like. SLPagingVi
 Add the following line to your Podfile:
 
 ```ruby
-pod 'SLPagingViewSwift', :git => 'https://github.com/davidseek/SLPagingViewSwift-Swift-3.git'
+pod 'SLPagingViewSwift-Swift3', :git => 'https://github.com/davidseek/SLPagingViewSwift-Swift-3-Tinder-Twitter.git'
 ```
 
 And run

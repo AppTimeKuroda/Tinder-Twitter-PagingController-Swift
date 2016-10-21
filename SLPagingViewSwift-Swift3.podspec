@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/StefanLage/SLPagingViewSwift"
   s.license      = "MIT"
   s.author       = { "StefanLage" => "lagestfan@gmail.com" }
-  s.source       = { :git => "https://github.com/davidseek/SLPagingViewSwift-Swift-3.git", :tag => "1.0.0" }
+  s.source       = { :git => "https://github.com/davidseek/SLPagingViewSwift-Swift-3-Tinder-Twitter.git", :tag => "1.0.0" }
   s.source_files = "SLPagingViewSwift/**/*.swift"
   s.requires_arc = true
   s.platform = :ios, "8.0"
